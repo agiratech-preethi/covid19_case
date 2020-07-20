@@ -43,3 +43,31 @@ collaborate (see also: git help workflows)
 concept guides. See 'git help <command>' or 'git help <concept>'
 to read about a specific subcommand or concept.
 See 'git help git' for an overview of the system.
+
+How to insert CSV files into MONGODB-
+
+1. First clone this app -
+
+2. Go to project Folder - npm install
+
+3. Check app.js -  Install all the packages.
+
+4. Create database - open terminal use this following commands, Go to mongo shell 
+  - db;
+  - use cases;
+  - db.createCollection("tamilnaduCase");
+  - show collections;
+
+5. Check once is there all CSV cases are inside in tamilnaduCase collection.
+
+// Get all the csv data in this collection.
+- db.tamilnaduCase.find({});
+
+// Check count also - db.tamilnaduCase.count();
+
+6. run command - node server.js
+
+7. Check postman collection URL -
+localhost:4000/api/createCase
+
+8. web site url - localhost:4000
