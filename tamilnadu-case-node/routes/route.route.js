@@ -6,5 +6,5 @@ router.post('/createCase', case_controller.case_create);
 router.get('/getCases', case_controller.get_Case);
 router.put('/updateCase/:id', case_controller.update_Case);
 router.delete('/delete/:id', case_controller.delete_Case);
-
+router.post('/uploadCases', case_controller.upload_cases)
 module.exports = router;

@@ -5,31 +5,11 @@ const ShemaCase = require('./models/case.model');
 const app = express();
 const csvFilePath = './cases/cases.csv'
 const csv = require('csvtojson');
+const upload = require("express-fileupload");
 
 // If you want to upload the CSV files into MONGODB, uncommand the code and run it.
 // Check the collection in table.
 
-
-/* app.get("/getCSV", (req, response) => {
-    csv()
-        .fromFile(csvFilePath)
-        .then((jsonObj) => {
-            mongoose.connect("mongodb://localhost:27017/cases", {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-                useCreateIndex: true
-            }, (err, client) => {
-                if (err) throw err;
-                client
-                    .collection("tamilnaduCase")
-                    .insertMany(jsonObj, (err, res) => {
-                        if (err) throw err;
-                        client.close();
-                    })
-                       
-                    });
-            })
-        }); */
 
 // Allow headers
 app.use(function (req, res, next) {
@@ -40,9 +20,10 @@ app.use(function (req, res, next) {
 });
 app.use(bodyparser.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(upload());
 
 // mongodb connection
-mongoose.connect("mongodb://localhost:27017/cases", {
+mongoose.connect(`${process.env.MONGODB}/cases?retryWrites=true&w=majority`, {
     keepAlive: true,
     keepAliveInitialDelay: 300000,
     socketTimeoutMS: 2000000,

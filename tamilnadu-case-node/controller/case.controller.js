@@ -1,4 +1,6 @@
 const ShemaCase = require('../models/case.model');
+const csv = require('csvtojson');
+
 exports.case_create = function (req, res, next) {
   var caseData = {
     Id: req.body.Id,
@@ -69,4 +71,22 @@ exports.delete_Case = function (req, res) {
 
       };
     });
+}
+
+
+
+exports.upload_cases = function (req, res) {
+  csv()
+  .fromString(req.files.cases.data.toString('utf8'))
+    .then((jsonObj) => {
+      ShemaCase.insertMany(jsonObj, (err, response) => {
+        if (err) {
+          res.send('failed to upload cases');
+        } else {
+          res.status(200).send({
+            msg: 'cases uploaded successfully'
+          });
+        }
+      })
+    })
 }
