@@ -3,6 +3,8 @@ const bodyparser = require("body-parser");
 const mongoose = require('mongoose');
 const app = express();
 const csv = require('csvtojson');
+app.set('view engine', 'ejs');
+
 // Allow headers
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -24,7 +26,8 @@ mongoose.connect(`${process.env.MONGODB}/cases?retryWrites=true&w=majority`, {
 
 // call for home page
 app.get('/home', function (req, res) {
-    res.sendFile(__dirname + "/" + "home.html");
+    res.render(__dirname + "/" + "home", { url: process.env.APP_URL});
+
 });
 
 const routes = require('./routes/route.route');

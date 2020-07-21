@@ -18,7 +18,7 @@ exports.case_create = function (req, res, next) {
     });
   })
     .catch((err) => {
-      res.json({ error: "error" });
+      res.status(400).send({error: err.message});
     })
 }
 
@@ -31,7 +31,7 @@ exports.get_Case = function (req, res, next) {
       });
     })
     .catch((err) => {
-      res.send('error has occured', err);
+      res.status(400).send({error: err.message});
     })
 };
 
@@ -47,7 +47,7 @@ exports.update_Case = function (req, res) {
     DeathCause: req.body.DeathCause
   }, { new: true, useFindAndModify: false }, function (err, result) {
     if (err) {
-      res.send('error updating student');
+      res.status(400).send({error: err.message});
     } else {
       res.status(200).send({
         data: result,
@@ -62,7 +62,7 @@ exports.delete_Case = function (req, res) {
   ShemaCase.findByIdAndRemove(req.params._id
     , function (err, result) {
       if (err) {
-        res.send('Error deleting for case');
+        res.status(400).send({error: err.message});
       } else {
         res.status(200).send({
           msg: 'Case has been deleted successfully'
@@ -78,7 +78,7 @@ exports.upload_cases = function (req, res) {
     .then((jsonObj) => {
       ShemaCase.insertMany(jsonObj, (err, response) => {
         if (err) {
-          res.send('failed to upload cases');
+          res.status(400).send({error: err.message});
         } else {
           res.status(200).send({
             msg: 'cases uploaded successfully'
