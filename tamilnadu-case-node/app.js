@@ -33,7 +33,7 @@ mongoose.connect("mongodb+srv://tamilnadu_case:covid2019@cluster0.xccya.mongodb.
 }).then(data => console.log('db connected')).catch(err => console.log('db error', err))
 
 // call for home page
-app.get('/', function (req, res) {
+app.get('/home', function (req, res) {
     res.sendFile(__dirname + "/" + "home.html");
 });
 
