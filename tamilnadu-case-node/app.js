@@ -1,10 +1,8 @@
 const express = require("express");
 const bodyparser = require("body-parser");
 const mongoose = require('mongoose');
-const ShemaCase = require('./models/case.model');
 const app = express();
 const csv = require('csvtojson');
-const config = require('./configs.json')
 // Allow headers
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -14,12 +12,12 @@ app.use(function (req, res, next) {
 });
 app.use(bodyparser.json());
 app.use(express.urlencoded({ extended: false }));
-
 // mongodb connection
-mongoose.connect(config.url, {
+console.log('process.env.MONGODB', process.env.MONGODB)
+mongoose.connect(`${process.env.MONGODB}/cases?retryWrites=true&w=majority`, {
     keepAlive: true,
-    keepAliveInitialDelay: 300000,
-    socketTimeoutMS: 2000000,
+    // keepAliveInitialDelay: 300000,
+    // socketTimeoutMS: 2000000,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
