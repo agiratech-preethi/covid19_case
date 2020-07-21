@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(upload());
 
 // mongodb connection
-mongoose.connect(`${process.env.MONGODB}/cases?retryWrites=true&w=majority`, {
+mongoose.connect("mongodb+srv://tamilnadu_case:covid2019@cluster0.xccya.mongodb.net/cases?retryWrites=true&w=majority", {
     keepAlive: true,
     keepAliveInitialDelay: 300000,
     socketTimeoutMS: 2000000,
