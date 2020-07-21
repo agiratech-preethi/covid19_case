@@ -13,11 +13,10 @@ app.use(function (req, res, next) {
 app.use(bodyparser.json());
 app.use(express.urlencoded({ extended: false }));
 // mongodb connection
-console.log('process.env.MONGODB', process.env.MONGODB)
 mongoose.connect(`${process.env.MONGODB}/cases?retryWrites=true&w=majority`, {
     keepAlive: true,
-    // keepAliveInitialDelay: 300000,
-    // socketTimeoutMS: 2000000,
+    keepAliveInitialDelay: 300000,
+    socketTimeoutMS: 2000000,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
