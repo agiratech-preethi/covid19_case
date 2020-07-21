@@ -3,14 +3,8 @@ const bodyparser = require("body-parser");
 const mongoose = require('mongoose');
 const ShemaCase = require('./models/case.model');
 const app = express();
-const csvFilePath = './cases/cases.csv'
 const csv = require('csvtojson');
-const upload = require("express-fileupload");
-
-// If you want to upload the CSV files into MONGODB, uncommand the code and run it.
-// Check the collection in table.
-
-
+const config = require('./configs.json')
 // Allow headers
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -20,10 +14,9 @@ app.use(function (req, res, next) {
 });
 app.use(bodyparser.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(upload());
 
 // mongodb connection
-mongoose.connect("mongodb+srv://tamilnadu_case:covid2019@cluster0.xccya.mongodb.net/cases?retryWrites=true&w=majority", {
+mongoose.connect(config.url, {
     keepAlive: true,
     keepAliveInitialDelay: 300000,
     socketTimeoutMS: 2000000,
