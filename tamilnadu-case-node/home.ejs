@@ -1,52 +1,179 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" charset="utf8"></script>
+<script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
-<script type="text/javascript"></script>
-<script href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css"></script>
+<script type="text/javascript" charset="utf8"></script>
+<script href="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+  integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css" rel="stylesheet"
+  crossorigin="anonymous">
 
-<table id="example" class="display nowrap" style="width:100%">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>RawContent</th>
-      <th>CaseNumber</th>
-      <th>Age</th>
-      <th>Gender</th>
-      <th>District</th>
-      <th>DeathCause</th>
+<!-- <link rel="stylesheet" type="text/css" href="/DataTables-1.10.21/extensions/Editor-1.9.4/css/editor.bootstrap.css">
 
-    </tr>
-  </thead>
+<script type="text/javascript" src="/DataTables-1.10.21/extensions/Editor-1.9.4/js/dataTables.editor.js"></script>
+<script type="text/javascript" src="/DataTables-1.10.21/extensions/Editor-1.9.4/js/editor.bootstrap.js"></script> -->
 
-</table>
+<style>
+  #createRecord {
+    float: right;
+    margin-left: 20px;
+
+  }
+
+  #main {
+    margin-bottom: 20px;
+
+  }
+</style>
+
+<body>
+  <div id="main">
+    <h4>Tamilnadu Covid19 Cases List
+      <!-- <button type="submit" ></button> -->
+      <a href="#exampleModalCenter" id="createRecord" class="btn btn-primary" data-toggle="modal"
+        data-target="#exampleModalCenter">Create a New record</a>
+      </h2>
+
+  </div>
+  <table id="example" class="display nowrap" style="width:100%">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>RawContent</th>
+        <th>CaseNumber</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>District</th>
+        <th>DeathCause</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+  </table>
+
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Create a New Case</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/api/createCase" method="POST">
+            <div class="form-group">
+              <label class="control-label">RawContent</label>
+              <div>
+                <input type="RawContent" class="form-control input-lg" name="RawContent" value="">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Age</label>
+              <div>
+                <input type="Age" class="form-control input-lg" name="Age">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">Gender</label>
+              <div>
+                <input type="Gender" class="form-control input-lg" name="Gender">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">District</label>
+              <div>
+                <input type="District" class="form-control input-lg" name="District">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label">DeathCause</label>
+              <div>
+                <input type="DeathCause" class="form-control input-lg" name="DeathCause">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+
 
 <script>
   var editor;
-    $(document).ready(function () {
-      $('#example').DataTable({
-        "processing": true,
-        "serverSide": false,
-        "paging": true,
-        "ordering": true,
-        "ajax": {
-          "url": "<%= url %>/api/getCases",
-          "type": "GET"
-        },
-        "columns": [
-          { "data": "Id" },
-          { "data": "RawContent" },
-          { "data": "CaseNumber" },
-          { "data": "Age" },
-          { "data": "Gender" },
-          { "data": "District" },
-          { "data": "DeathCause" }
-        ]
-     
+  $(document).ready(function () {
+    $("#a").click(function () {
+      $('#exampleModalCenter').modal('show');
+
     });
-    })
-  
-  </script>
+    // editor = new $.fn.dataTable.Editor({
+    //   "ajax": "../php/staff.php",
+    //   "table": "#example",
+    //   "fields": [{
+    //     "label": "Id:",
+    //     "name": "Id"
+    //   }, {
+    //     "label": "RawContent:",
+    //     "name": "RawContent"
+    //   }, {
+    //     "label": "CaseNumber:",
+    //     "name": "CaseNumber"
+    //   }, {
+    //     "label": "Age:",
+    //     "name": "Age"
+    //   }, {
+    //     "label": "Gender:",
+    //     "name": "Gender",
+    //   }, {
+    //     "label": "District:",
+    //     "name": "District"
+    //   }, {
+    //     "label": "DeathCause:",
+    //     "name": "DeathCause"
+    //   }
+    //   ]
+    // });
+
+    $('#example').removeAttr('width').DataTable({
+      "processing": true,
+      "serverSide": false,
+      "paging": true,
+      "ordering": true,
+      "fixedHeader": true,
+      "responsive": true,
+      "scrollY": true,
+      "scrollX": true,
+      "scrollCollapse": true,
+      "ajax": {
+        "url": "<%= url %>/api/getCases",
+        "type": "GET"
+      },
+      "columns": [
+        { "data": "Id" },
+        { "data": "RawContent" },
+        { "data": "CaseNumber" },
+        { "data": "Age" },
+        { "data": "Gender" },
+        { "data": "District" },
+        { "data": "DeathCause" },
+        {
+          "data": null,
+          "className": "center",
+          "defaultContent": '<a href="<%= url %>/api/create" class="editor_edit">Edit</a> / <a href="" class="editor_remove">Delete</a>'
+        }
+      ],      
+    });
+  })
+</script>

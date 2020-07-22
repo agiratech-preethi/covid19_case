@@ -26,7 +26,8 @@ mongoose.connect(`${process.env.MONGODB}/cases?retryWrites=true&w=majority`, {
 
 // call for home page
 app.get('/home', function (req, res) {
-    res.render(__dirname + "/" + "home", { url: process.env.APP_URL});
+    res.render(__dirname + "/" + "home", { url: process.env.APP_URL},
+   );
 
 });
 
