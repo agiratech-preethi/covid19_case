@@ -113,7 +113,7 @@
       </div>
     </div>
   </div>
-  <!-- <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -124,7 +124,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="/api/updateCase/:id" method="POST">
+        <form action="/api/updateCase/:id" method="PUT">
           <div class="form-group">
             <label class="control-label">RawContent</label>
             <div>
@@ -134,25 +134,25 @@
           <div class="form-group">
             <label class="control-label">Age</label>
             <div>
-              <input type="Age" class="form-control input-lg" name="Age">
+              <input type="Age" class="form-control input-lg" name="Age" value="">
             </div>
           </div>
           <div class="form-group">
             <label class="control-label">Gender</label>
             <div>
-              <input type="Gender" class="form-control input-lg" name="Gender">
+              <input type="Gender" class="form-control input-lg" name="Gender" value="">
             </div>
           </div>
           <div class="form-group">
             <label class="control-label">District</label>
             <div>
-              <input type="District" class="form-control input-lg" name="District">
+              <input type="District" class="form-control input-lg" name="District" value="">
             </div>
           </div>
           <div class="form-group">
             <label class="control-label">DeathCause</label>
             <div>
-              <input type="DeathCause" class="form-control input-lg" name="DeathCause">
+              <input type="DeathCause" class="form-control input-lg" name="DeathCause" value="">
             </div>
           </div>
           <div class="modal-footer">
@@ -165,7 +165,7 @@
 
     </div>
   </div>
-</div> -->
+</div>
 </body>
 
 
@@ -177,39 +177,10 @@
 
     });
 
-    
-    // var editor = new $.fn.dataTable.Editor({
-    // "ajax": {
-    //   "url": "<%= url %>/api/getCases",
-    //   "table": "#example",
+    var events = $('#events');
 
-    // },
-    // "fields": [{
-    //   "label": "Id:",
-    //   "name": "Id"
-    // }, {
-    //   "label": "RawContent:",
-    //   "name": "RawContent"
-    // }, {
-    //   "label": "CaseNumber:",
-    //   "name": "CaseNumber"
-    // }, {
-    //   "label": "Age:",
-    //   "name": "Age"
-    // }, {
-    //   "label": "Gender:",
-    //   "name": "Gender",
-    // }, {
-    //   "label": "District:",
-    //   "name": "District"
-    // }, {
-    //   "label": "DeathCause:",
-    //   "name": "DeathCause"
-    // }
-    // ]
-    // });
-
-    var table = $('#example').removeAttr('width').DataTable({
+    var oTable = $('#example').removeAttr('width').DataTable({
+      "dom": 'Bfrtip',
       "processing": true,
       "serverSide": false,
       "paging": true,
@@ -219,6 +190,7 @@
       "scrollY": true,
       "scrollX": true,
       "scrollCollapse": true,
+      "select": true,
       "ajax": {
         "url": "<%= url %>/api/getCases",
         "type": "GET"
@@ -234,16 +206,66 @@
         {
           "data": null,
           "className": "center",
-          "defaultContent": '<a href="#exampleModalCenter" data-target="#exampleModalCenter" data-toggle="modal" class="editor_edit">Edit</a> / <a href="" class="editor_remove">Delete</a>'
+          "defaultContent": '<a href="#exampleModalCenter1" data-target="#exampleModalCenter1" data-toggle="modal" class="edit">Edit</a> / <a href="" class="editor_remove">Delete</a>'
         },
       ],
-      // ssss: table.row( 0 ).data()
-    });
-    // console.log('sss', ssss);
-    $("#example").on('click', 'tr', function () {
-      var Id = table.row(this);
-      console.log('id', Id)
-      // alert('Clicked row id ' + id);
+     
+
     });
   })
+    // $("#example").on('click', 'tr', function () {
+    //   var Id = table.row(this);
+    //   console.log('id', Id)
+    // });
+
+//     function editRow ( oTable, nRow )
+// {
+//     var aData = oTable.fnGetData(nRow);
+//     var jqTds = $('>td', nRow);
+//     jqTds[0].innerHTML = '<input type="text" value="'+aData[0]+'">';
+//     jqTds[1].innerHTML = '<input type="text" value="'+aData[1]+'">';
+//     jqTds[2].innerHTML = '<input type="text" value="'+aData[2]+'">';
+//     jqTds[3].innerHTML = '<input type="text" value="'+aData[3]+'">';
+//     jqTds[4].innerHTML = '<input type="text" value="'+aData[4]+'">';
+//     jqTds[5].innerHTML = '[Save]()';
+// }
+
+// function saveRow ( oTable, nRow )
+// {
+//     var jqInputs = $('input', nRow);
+//     oTable.fnUpdate( jqInputs[0].value, nRow, 0, false );
+//     oTable.fnUpdate( jqInputs[1].value, nRow, 1, false );
+//     oTable.fnUpdate( jqInputs[2].value, nRow, 2, false );
+//     oTable.fnUpdate( jqInputs[3].value, nRow, 3, false );
+//     oTable.fnUpdate( jqInputs[4].value, nRow, 4, false );
+//     oTable.fnUpdate( '[Edit]()', nRow, 5, false );
+//     oTable.fnDraw();
+// }
+
+// $('#example a.edit').on('click', function (e) {
+//         e.preventDefault();
+ 
+//         /* Get the row as a parent of the link that was clicked on */
+//         var nRow = $(this).parents('tr')[0];
+ 
+//         if ( nEditing !== null || nEditing != nRow ) {
+//             /* A different row is being edited - the edit should be cancelled and this row edited */
+//             restoreRow( oTable, nEditing );
+//             editRow( oTable, nRow );
+//             nEditing = nRow;
+//         }
+//         else if( nEditing == nRow || this.innerHTML == "Save" ) {
+//             /* This row is being edited and should be saved */
+//             saveRow( oTable, nEditing );
+//             nEditing = null;
+//         }
+//         else {
+//             /* No row currently being edited */
+//             editRow( oTable, nRow );
+//             nEditing = nRow;
+//         }
+//     } );
+
+//   })
+
 </script>
