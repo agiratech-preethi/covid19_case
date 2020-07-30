@@ -55,6 +55,18 @@
         <th>Gender</th>
         <th>District</th>
         <th>DeathCause</th>
+        <th>AdmittedOn</th>
+        <th>DiedOn</th>
+        <th>SampleTakenOn</th>
+        <th>ResultOn</th>
+        <th>BroughtDead</th>
+        <th>HomeDeath</th>
+        <th>Comorbidity</th>
+        <th>Diabetes</th>
+        <th>Hypertension</th>
+        <th>Kidney</th>
+        <th>Heart</th>
+
         <th>Actions</th>
       </tr>
     </thead>
@@ -183,7 +195,8 @@
       "dom": 'Bfrtip',
       "processing": true,
       "serverSide": false,
-      "paging": true,
+      "paging": false,
+      "searching": false,
       "ordering": true,
       "fixedHeader": true,
       "responsive": true,
@@ -192,7 +205,7 @@
       "scrollCollapse": true,
       "select": true,
       "ajax": {
-        "url": "<%= url %>/api/getCases",
+        "url": "<%= url %>/api/getCases?limit=10&page=1",
         "type": "GET"
       },
       "columns": [
@@ -203,6 +216,18 @@
         { "data": "Gender" },
         { "data": "District" },
         { "data": "DeathCause" },
+        { "data": "admitted_on" },
+        { "data": "died_on" },
+        { "data": "sample_taken_on" },
+        { "data": "result_on" },
+        { "data": "brought_dead" },
+        { "data": "home_death" },
+        { "data": "comorbidity" },
+        { "data": "diabetes" },
+        { "data": "hypertension" },
+        { "data": "kidney" },
+        { "data": "heart" },
+
         {
           "data": null,
           "className": "center",

@@ -3,6 +3,9 @@ const bodyparser = require("body-parser");
 const mongoose = require('mongoose');
 const app = express();
 const csv = require('csvtojson');
+// const csvFilePath = '../cases/cases.csv'
+const upload = require("express-fileupload");
+
 app.set('view engine', 'ejs');
 
 // Allow headers
@@ -14,7 +17,9 @@ app.use(function (req, res, next) {
 });
 app.use(bodyparser.json());
 app.use(express.urlencoded({ extended: false }));
-// mongodb connection
+app.use(upload());
+
+//mongodb connection
 mongoose.connect(`${process.env.MONGODB}/cases?retryWrites=true&w=majority`, {
     keepAlive: true,
     keepAliveInitialDelay: 300000,
@@ -27,7 +32,6 @@ mongoose.connect(`${process.env.MONGODB}/cases?retryWrites=true&w=majority`, {
 // call for home page
 app.get('/home', function (req, res) {
     res.render(__dirname + "/" + "home", { url: process.env.APP_URL},
-    { getalldata : data }
    );
 
 });
